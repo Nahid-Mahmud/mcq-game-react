@@ -1,15 +1,131 @@
-import React from 'react';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const App = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [mark, setMark] = useState(0);
+  // console.log("mark", mark);
+  const { data: quizzes, refetch: quizRefetch } = useQuery({
+    queryKey: ["quizzes"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_serverUrl}/quizzes?page=${currentPage}`
+      );
+      const data = await response.json();
+      return data;
+    },
+  });
+
+  const { data: quizcount = [], isLoading } = useQuery({
+    queryKey: ["quizCount"],
+    queryFn: async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_serverUrl}/quizCount`
+      );
+      return res.data?.totalQuiz;
+    },
+  });
+  const totalquiz = parseInt(quizcount);
+
+  // console.log(quizzes);
+  // console.log(totalquiz);
+
+  // useEffect(() => quizRefetch(), [quizRefetch,currentPage]);
+  useEffect(() => {
+    quizRefetch();
+  }, [quizRefetch, currentPage]);
+  console.log("currentPage", currentPage);
+
+  // if (currentPage + 1 === totalquiz) {
+  //   return (
+  //     <>
+  //       <p> Quiz complete and total mark : {mark} </p>
+  //     </>
+  //   );
+  // }
 
   return (
     <div>
-       <div className="text-center ">Main page</div>
+      <div className="text-center ">Main page</div>
+      <div>
+        {quizzes?.map((quiz, index) => {
+          // handle next and previous
+
+          const handleNext = (quizName) => {
+            currentPage < totalquiz - 1
+              ? setCurrentPage(currentPage + 1)
+              : setCurrentPage(currentPage);
+            console.log(quizName);
+            console.log(quiz?.rightAnswer);
+            if (quizName === quiz?.rightAnswer) {
+              setMark(mark + 1);
+            }
+          };
+
+          const handlePrevious = () => {
+            currentPage > 0
+              ? setCurrentPage(currentPage - 1)
+              : setCurrentPage(currentPage);
+            if (mark > 0) {
+              setMark(mark - 1);
+              console.log(mark);
+            }
+          };
+          console.log(mark);
+          // console.log(quiz);
+          return (
+            <div key={index} className="card w-96 bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="text-2xl font-semibold">
+                  <span>No : {quiz?.quizNumber}</span> {quiz?.question}
+                </h2>
+                {quiz?.options.map((option, index) => {
+                  return (
+                    <p
+                      className="btn"
+                      onClick={() => handleNext(option)}
+                      key={index}
+                    >
+                      {option}
+                    </p>
+                  );
+                })}
+
+                <div className="card-actions justify-start">
+                  {currentPage === 0 ? (
+                    ""
+                  ) : (
+                    <button
+                      onClick={handlePrevious}
+                      className="btn btn-primary"
+                    >
+                      previous
+                    </button>
+                  )}
+                  {/* 
+                  {currentPage === 4 ? (
+                    <button disabled={true} className="btn btn-primary">
+                      next
+                    </button>
+                  ) : (
+                    <button onClick={handleNext} className="btn btn-primary">
+                      next
+                    </button>
+                  )} */}
+                  {/* <button onClick={handleNext} className="btn btn-primary">
+                    next
+                  </button> */}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
 export default App;
-
 
 // https://raw.githubusercontent.com/Nahid-Mahmud/mcq-game-react/main/public/quiz.json

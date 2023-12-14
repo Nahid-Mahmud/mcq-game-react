@@ -7,7 +7,11 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [mark, setMark] = useState(0);
   // console.log("mark", mark);
-  const { data: quizzes, refetch: quizRefetch } = useQuery({
+  const {
+    data: quizzes,
+    refetch: quizRefetch,
+    isLoading: quizLoading,
+  } = useQuery({
     queryKey: ["quizzes"],
     queryFn: async () => {
       const response = await fetch(
@@ -37,6 +41,13 @@ const App = () => {
     quizRefetch();
   }, [quizRefetch, currentPage]);
   // console.log("currentPage", currentPage);
+
+  if (quizLoading)
+    return (
+      <div className="min-h-[10vh] flex justify-center items-center">
+        <span className="loading loading-infinity loading-lg"></span>
+      </div>
+    );
 
   return (
     <div>

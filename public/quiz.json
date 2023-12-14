@@ -1,0 +1,57 @@
+[
+  {
+    "id": 35489,
+    "quizNumber": 1,
+    "question": "What is JSX in React?",
+    "options": [
+      "JavaScript XML",
+      "Java Syntax Extension",
+      "JavaScript Syntax Extension",
+      "Java XML"
+    ],
+    "rightAnswer": "JavaScript Syntax Extension"
+  },
+  {
+    "id": 78234,
+    "quizNumber": 2,
+    "question": "What does the term 'props' stand for in React?",
+    "options": ["Properties", "Programming", "PropTypes", "Propellers"],
+    "rightAnswer": "Properties"
+  },
+  {
+    "id": 12345,
+    "quizNumber": 3,
+    "question": "What is the purpose of React Router?",
+    "options": [
+      "State management",
+      "Routing in a React application",
+      "AJAX requests",
+      "Component styling"
+    ],
+    "rightAnswer": "Routing in a React application"
+  },
+  {
+    "id": 98765,
+    "quizNumber": 4,
+    "question": "Which lifecycle method is called after the component renders?",
+    "options": [
+      "componentWillMount",
+      "componentDidMount",
+      "componentWillUpdate",
+      "componentDidUpdate"
+    ],
+    "rightAnswer": "componentDidMount"
+  },
+  {
+    "id": 56789,
+    "quizNumber": 5,
+    "question": "What is the purpose of the 'useState' hook in React?",
+    "options": [
+      "To declare state in a functional component",
+      "To fetch data from an API",
+      "To handle events",
+      "To create a class component"
+    ],
+    "rightAnswer": "To declare state in a functional component"
+  }
+]

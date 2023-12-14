@@ -50,12 +50,12 @@ const App = () => {
   //   );
 
   return (
-    <div>
-      <div className="min-h-screen flex flex-col max-w-[95vw] mx-auto md:max-w-[80vw]  lg:max-w-[50rem] justify-center">
-        <div className="shadow-2xl p-5">
-          <div className="text-center my-3 lg:text-3xl text-xl  font-bold underline  ">
+    <div className="bg-[#132043]">
+      <div className="min-h-screen text-white flex flex-col max-w-[95vw]  mx-auto md:max-w-[80vw]  lg:max-w-[50rem] justify-center">
+        <div className="shadow-2xl bg-[#1F4172] p-5 rounded-md overflow-hidden">
+          <p className="text-center my-3 lg:text-3xl text-xl  font-bold underline  ">
             Welcome To React Quiz
-          </div>
+          </p>
           {quizLoading ? (
             <div className="min-h-[10vh] flex justify-center items-center">
               <span className="loading loading-infinity loading-lg"></span>
@@ -96,7 +96,7 @@ const App = () => {
                 // console.log(mark);
                 // console.log(quiz);
                 return (
-                  <div key={index} className="card bg-base-100 ">
+                  <div key={index} className="card  ">
                     <div className="card-body">
                       <h2 className="lg:text-2xl text-xl font-semibold">
                         <span>No : {quiz?.quizNumber}</span> {quiz?.question}
@@ -104,7 +104,7 @@ const App = () => {
                       {quiz?.options.map((option, index) => {
                         return (
                           <p
-                            className="btn"
+                            className="btn bg-[#FDF0F0]"
                             onClick={() => handleNext(option)}
                             key={index}
                           >
@@ -119,7 +119,7 @@ const App = () => {
                         ) : (
                           <button
                             onClick={handlePrevious}
-                            className="btn btn-primary mt-5"
+                            className="btn bg-[#f1b4bb] mt-5"
                           >
                             previous
                           </button>

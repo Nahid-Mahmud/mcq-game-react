@@ -42,12 +42,12 @@ const App = () => {
   }, [quizRefetch, currentPage]);
   // console.log("currentPage", currentPage);
 
-  if (quizLoading)
-    return (
-      <div className="min-h-[10vh] flex justify-center items-center">
-        <span className="loading loading-infinity loading-lg"></span>
-      </div>
-    );
+  // if (quizLoading)
+  //   return (
+  //     <div className="min-h-[10vh] flex justify-center items-center">
+  //       <span className="loading loading-infinity loading-lg"></span>
+  //     </div>
+  //   );
 
   return (
     <div>
@@ -56,75 +56,81 @@ const App = () => {
           <div className="text-center my-3 lg:text-3xl text-xl  font-bold underline  ">
             Welcome To React Quiz
           </div>
-          <div>
-            {quizzes?.map((quiz, index) => {
-              // handle next and previous
+          {quizLoading ? (
+            <div className="min-h-[10vh] flex justify-center items-center">
+              <span className="loading loading-infinity loading-lg"></span>
+            </div>
+          ) : (
+            <div>
+              {quizzes?.map((quiz, index) => {
+                // handle next and previous
 
-              const handleNext = (quizName) => {
-                currentPage < totalquiz - 1
-                  ? setCurrentPage(currentPage + 1)
-                  : setCurrentPage(currentPage);
-                console.log(quizName);
-                console.log(quiz?.rightAnswer);
-                if (quizName === quiz?.rightAnswer) {
-                  setMark(mark + 1);
-                }
+                const handleNext = (quizName) => {
+                  currentPage < totalquiz - 1
+                    ? setCurrentPage(currentPage + 1)
+                    : setCurrentPage(currentPage);
+                  // console.log(quizName);
+                  // console.log(quiz?.rightAnswer);
+                  if (quizName === quiz?.rightAnswer) {
+                    setMark(mark + 1);
+                  }
 
-                if (currentPage + 1 === totalquiz) {
-                  Swal.fire({
-                    title: "Good job!",
-                    text: `Quiz complete and total mark : ${mark}`,
-                    icon: "success",
-                  });
-                }
-              };
+                  if (currentPage + 1 === totalquiz) {
+                    Swal.fire({
+                      title: "Good job!",
+                      text: `Quiz complete and total mark : ${mark}`,
+                      icon: "success",
+                    });
+                  }
+                };
 
-              const handlePrevious = () => {
-                currentPage > 0
-                  ? setCurrentPage(currentPage - 1)
-                  : setCurrentPage(currentPage);
-                if (mark > 0) {
-                  setMark(mark - 1);
-                  console.log(mark);
-                }
-              };
-              console.log(mark);
-              // console.log(quiz);
-              return (
-                <div key={index} className="card bg-base-100 ">
-                  <div className="card-body">
-                    <h2 className="lg:text-2xl text-xl font-semibold">
-                      <span>No : {quiz?.quizNumber}</span> {quiz?.question}
-                    </h2>
-                    {quiz?.options.map((option, index) => {
-                      return (
-                        <p
-                          className="btn"
-                          onClick={() => handleNext(option)}
-                          key={index}
-                        >
-                          {option}
-                        </p>
-                      );
-                    })}
+                const handlePrevious = () => {
+                  currentPage > 0
+                    ? setCurrentPage(currentPage - 1)
+                    : setCurrentPage(currentPage);
+                  if (mark > 0) {
+                    setMark(mark - 1);
+                    console.log(mark);
+                  }
+                };
+                // console.log(mark);
+                // console.log(quiz);
+                return (
+                  <div key={index} className="card bg-base-100 ">
+                    <div className="card-body">
+                      <h2 className="lg:text-2xl text-xl font-semibold">
+                        <span>No : {quiz?.quizNumber}</span> {quiz?.question}
+                      </h2>
+                      {quiz?.options.map((option, index) => {
+                        return (
+                          <p
+                            className="btn"
+                            onClick={() => handleNext(option)}
+                            key={index}
+                          >
+                            {option}
+                          </p>
+                        );
+                      })}
 
-                    <div className="card-actions justify-start">
-                      {currentPage === 0 ? (
-                        ""
-                      ) : (
-                        <button
-                          onClick={handlePrevious}
-                          className="btn btn-primary mt-5"
-                        >
-                          previous
-                        </button>
-                      )}
+                      <div className="card-actions justify-start">
+                        {currentPage === 0 ? (
+                          ""
+                        ) : (
+                          <button
+                            onClick={handlePrevious}
+                            className="btn btn-primary mt-5"
+                          >
+                            previous
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>
